@@ -2,6 +2,10 @@ package engine;
 
 import engine.listeners.KeyListener;
 import engine.listeners.MouseListener;
+import engine.managers.Scene;
+import engine.scenes.LevelEditorScene;
+import engine.scenes.LevelScene;
+import engine.utils.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -22,14 +26,16 @@ public class Window {
     private final int height;
     private final String title;
 
-    private float red;
-    private float green;
-    private float blue;
+    public float red;
+    public float green;
+    public float blue;
     private float alpha;
 
     // The window handle
     private long glfwWindow;
     private static Window window = null;
+
+    private static Scene currentScene;
 
     private Window() {
         this.width = 1920;
@@ -40,6 +46,21 @@ public class Window {
         green = 1.0f;
         blue = 1.0f;
         alpha = 1.0f;
+    }
+
+    public static void changeScene(int newScene) {
+        switch (newScene) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                //currentScene.init();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+                break;
+            default:
+                assert false: "Unknown Scene '"  + newScene + "'";
+                break;
+        }
     }
 
     public static Window get() {
@@ -116,9 +137,15 @@ public class Window {
 
         // Make the window visible
         glfwShowWindow(glfwWindow);
+
+        Window.changeScene(0);
     }
 
     private void loop() {
+        float beginTime = Time.getTime();
+        float endTime;
+        float deltaTime = -1.0f;
+
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         // LWJGL detects the context that is current in the current thread,
@@ -139,6 +166,14 @@ public class Window {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
+
+            if (deltaTime >= 0)
+                currentScene.update(deltaTime);
+
+            // Get Delta Time
+            endTime = Time.getTime();
+            deltaTime = endTime - beginTime;
+            beginTime = endTime;
         }
     }
 }
