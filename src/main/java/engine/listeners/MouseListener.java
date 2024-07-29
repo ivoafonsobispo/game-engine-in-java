@@ -6,17 +6,13 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class MouseListener {
     public static final int NUMBER_OF_BUTTONS_IN_MOUSE = 3;
     private static MouseListener instance;
-
+    private final boolean[] mouseButtonPressed = new boolean[NUMBER_OF_BUTTONS_IN_MOUSE];
     private double scrollX;
     private double scrollY;
-
     private double xPos;
     private double yPos;
     private double lastX;
     private double lastY;
-
-    private boolean mouseButtonPressed[] = new boolean[NUMBER_OF_BUTTONS_IN_MOUSE];
-
     private boolean isDragging;
 
     private MouseListener() {

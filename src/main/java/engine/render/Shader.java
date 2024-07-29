@@ -9,11 +9,10 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
 
+    private final String filepath;
     private int shaderProgramID;
-
     private String vertexSource;
     private String fragmentSource;
-    private String filepath;
 
     public Shader(String filepath) {
         this.filepath = filepath;

@@ -13,11 +13,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class LevelEditorScene extends Scene {
 
-    private int vertexID;
-    private int fragmentID;
-    private int shaderProgram;
-
-    private float[] vertexArray = {
+    private final float[] vertexArray = {
             // Position             // Color
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // bottom right
             -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // top left
@@ -26,14 +22,12 @@ public class LevelEditorScene extends Scene {
     };
 
     // IMPORTANT: counter-clockwise order
-    private int[] elementArray = {
+    private final int[] elementArray = {
             2, 1, 0, // Top right triangle
             0, 1, 3 // Bottom left triangle
     };
 
     private int vaoID;
-    private int vboID;
-    private int eboID;
 
     private Shader defaultShader;
 
@@ -54,7 +48,7 @@ public class LevelEditorScene extends Scene {
         vertexBuffer.put(vertexArray).flip();
 
         // Create VBO upload vertex buffer
-        vboID = glGenBuffers();
+        int vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
 
@@ -62,7 +56,7 @@ public class LevelEditorScene extends Scene {
         IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
         elementBuffer.put(elementArray).flip();
 
-        eboID = glGenBuffers();
+        int eboID = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 

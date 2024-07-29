@@ -8,7 +8,7 @@ public class KeyListener {
     public static final int NUMBER_OF_GLFW_KEYBINDINGS = 350;
 
     private static KeyListener instance;
-    private boolean[] keyPressed = new boolean[NUMBER_OF_GLFW_KEYBINDINGS];
+    private final boolean[] keyPressed = new boolean[NUMBER_OF_GLFW_KEYBINDINGS];
 
     private KeyListener() {
 

@@ -1,6 +1,5 @@
 package engine.scenes;
 
-import engine.Window;
 import engine.managers.Scene;
 
 public class LevelScene extends Scene {
